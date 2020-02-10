@@ -1,0 +1,58 @@
+{
+  "name": "Syntax",
+  "description": "Full Stack Developers Wes Bos and Scott Tolinski dive deep into web development topics, explaining how they work and talking about their own experiences. They cover from JavaScript frameworks like React, to the latest advancements in CSS to simplifying web tooling.",
+  "engines": {
+    "node": ">=8.1.2"
+  },
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "deploy": "now",
+    "alias": "now alias",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "now": {
+    "alias": [
+      "syntax",
+      "syntax.fm"
+    ]
+  },
+  "dependencies": {
+    "autoprefixer": "9.7.1",
+    "axios": "^0.19.0",
+    "babel-plugin-module-resolver": "3.2.0",
+    "babel-plugin-wrap-in-js": "^1.1.1",
+    "date-fns": "^2.7.0",
+    "express": "^4.17.1",
+    "glob": "7.1.6",
+    "meta-marked": "^0.4.2",
+    "next": "^9.1.3",
+    "next-url-prettifier": "^1.4.0",
+    "postcss-easy-import": "3.0.0",
+    "postcss-loader": "3.0.0",
+    "prop-types": "^15.7.2",
+    "raw-loader": "^3.1.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-icons": "^3.8.0",
+    "speakingurl": "^14.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-wesbos": "0.0.19",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
+    "prettier": "^1.19.1",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2"
+  }
+}
