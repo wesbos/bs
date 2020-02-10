@@ -16,7 +16,13 @@ renderer.link = function(href, title, text) {
 };
 
 const loadShows = async () => {
-  const files = await glob('shows/*.md');
+  // load from cache
+  if (shows.length) {
+    return shows;
+  }
+
+  // otherwise regen
+  const files = await glob('./node_modules/@architect/shared/shows/*.md');
   const markdownPromises = files.map(file => readAFile(file, 'utf-8'));
   const showMarkdown = await Promise.all(markdownPromises);
 
@@ -35,9 +41,11 @@ const loadShows = async () => {
     }) // flatten
     .map(show => ({ ...show, displayNumber: pad(show.number) })) // pad zeros
     .reverse();
+  return shows;
 };
 
-exports.getShows = () => {
+exports.getShows = async () => {
+  const s = await loadShows();
   const now = Date.now();
   return shows.filter(show => show.date < now);
 };
