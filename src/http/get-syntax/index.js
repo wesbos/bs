@@ -9,8 +9,16 @@ const express = require('express');
 
 // HTTP function
 async function http(req, res) {
-    // const server = express();
-  // // Custom Next.js URLs
+  // everything else
+  return handle(req, res);
+  // server.get('*', (req, res) => handle(req, res));
+  // server.listen(port, () => `Listening on ${port}`);
+}
+
+exports.handler = http;
+
+
+  // // TODO Custom Next.js URLs
   // Router.forEachPrettyPattern((page, pattern, defaultParams) => {
   //   server.get(pattern, (req, res) => {
   //     app.render(
@@ -21,11 +29,3 @@ async function http(req, res) {
   //     );
   //   });
   // });
-
-  // everything else
-  return handle(req, res);
-  // server.get('*', (req, res) => handle(req, res));
-  // server.listen(port, () => `Listening on ${port}`);
-}
-
-exports.handler = http;
