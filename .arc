@@ -1,10 +1,17 @@
+# Warning! Do Not Edit
+# --------------------
+# This is a generated file and will be overwritten
+
 @app
-init
+lion-9ii
+
+@static
 
 @http
 get /
 
-@aws
-# profile default
-# region us-west-1
-  
+@tables
+data
+  scopeID *String
+  dataID **String
+  ttl TTL
