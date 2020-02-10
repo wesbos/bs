@@ -1,7 +1,3 @@
-# Warning! Do Not Edit
-# --------------------
-# This is a generated file and will be overwritten
-
 @app
 lion-9ii
 
@@ -9,6 +5,7 @@ lion-9ii
 
 @http
 get /
+get /syntax
 
 @tables
 data
