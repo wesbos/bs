@@ -6,6 +6,7 @@ lion-9ii
 @http
 get /
 get /syntax
+get /api/shows
 
 @tables
 data
