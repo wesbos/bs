@@ -56,7 +56,8 @@ exports.getShow = async number => {
   return show;
 };
 
-exports.getAllShowSickPicks = () => {
+exports.getAllShowSickPicks = async () => {
+  const shows = await loadShows();
   // Since the sick picks parsed markdown id is not consistent,
   // this RegEx finds the first <h2> tag with an id that contains
   // the sequential characters "icks" from "picks" and selects
@@ -65,7 +66,7 @@ exports.getAllShowSickPicks = () => {
   const sickPickRegex = /(<h2 id=".*(icks).*">*[\s\S]*?(?=<h2))/g;
   const headerRegex = /[\s\S]*(?=<\/h2)/; // finds all characters up until the first closing </h2>
 
-  return this.getShows().reduce((sickPicksAcc, show) => {
+  return shows.reduce((sickPicksAcc, show) => {
     const episode = `<h2>Episode Number: ${show.number} - Sick Picks`;
     const sickPickMatch = show.html.match(sickPickRegex);
 
@@ -82,5 +83,3 @@ exports.getAllShowSickPicks = () => {
     return sickPicksAcc;
   }, []);
 };
-
-loadShows();

@@ -1,7 +1,0 @@
-{
-  "name": "begin-app-get-api-sickpicks",
-  "dependencies": {
-    "@architect/functions": "latest",
-    "@begin/data": "latest"
-  }
-}
