@@ -7,8 +7,6 @@ lion-9ii
 get /
 get /syntax
 get /api/shows
-get /api/shows/:number
-get /api/sickpicks
 
 @tables
 data
