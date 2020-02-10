@@ -1,7 +1,7 @@
 {
-  "name": "begin-app",
+  "name": "begin-syntax",
   "version": "0.0.0",
-  "description": "A simple Begin app with the minimum necessary file structure",
+  "description": "hey",
   "scripts": {
     "start": "npx sandbox"
   },
