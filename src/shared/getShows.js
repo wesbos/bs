@@ -8,7 +8,7 @@ const format = require('date-fns/format');
 
 const pad = num => `000${num}`.substr(-3);
 
-let shows = [];
+let cachedShows = [];
 
 const renderer = new marked.Renderer();
 renderer.link = function(href, title, text) {
@@ -17,8 +17,8 @@ renderer.link = function(href, title, text) {
 
 const loadShows = async () => {
   // load from cache
-  if (shows.length) {
-    return shows;
+  if (cachedShows.length) {
+    return cachedShows;
   }
 
   // otherwise regen
@@ -26,7 +26,7 @@ const loadShows = async () => {
   const markdownPromises = files.map(file => readAFile(file, 'utf-8'));
   const showMarkdown = await Promise.all(markdownPromises);
 
-  shows = showMarkdown
+  cachedShows = showMarkdown
     .map(md => marked(md, { renderer })) // convert to markdown
     .map((show, i) => {
       const { number } = show.meta;
@@ -41,16 +41,17 @@ const loadShows = async () => {
     }) // flatten
     .map(show => ({ ...show, displayNumber: pad(show.number) })) // pad zeros
     .reverse();
-  return shows;
+  return cachedShows;
 };
 
 exports.getShows = async () => {
-  const s = await loadShows();
+  const shows = await loadShows();
   const now = Date.now();
   return shows.filter(show => show.date < now);
 };
 
-exports.getShow = number => {
+exports.getShow = async number => {
+  const shows = await loadShows();
   const show = shows.find(showItem => showItem.displayNumber === number);
   return show;
 };

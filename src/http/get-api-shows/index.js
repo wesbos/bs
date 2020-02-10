@@ -1,6 +1,3 @@
-// Enable secure sessions, express-style middleware, and more:
-// https://docs.begin.com/en/functions/http/
-//
 const arc = require('@architect/functions');
 const { getShows } = require('@architect/shared/getShows');
 
