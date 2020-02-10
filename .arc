@@ -7,6 +7,7 @@ dawn-i82
 get /
 get /syntax
 get /api/shows
+get /api/shows/:number
 
 @tables
 data
