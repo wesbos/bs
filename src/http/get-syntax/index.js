@@ -1,39 +1,47 @@
-// Enable secure sessions, express-style middleware, and more:
-// https://docs.begin.com/en/functions/http/
-//
-// let begin = require('@architect/functions')
+const express = require('express');
+const next = require('next');
+const { Router } = require('./routes');
 
-let html = `
-<!doctype html>
-<html lang=en>
-  <head>
-    <meta charset=utf-8>
-    <title>Hi!</title>
-    <link rel="stylesheet" href="https://static.begin.app/starter/default.css">
-    <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
-  </head>
-  <body>
-    <h1 class="center-text">
-      Hello world!
-    </h1>
-    <p class="center-text">
-      Your new route is ready to go!
-    </p>
-    <p class="center-text">
-      Learn more about building <a href="https://docs.begin.com/en/functions/http/" class="link" target="_blank">Begin HTTP functions here</a>.
-    </p>
-  </body>
-</html>
-`
+const dev = process.env.NODE_ENV !== 'production';
+const port = parseInt(process.env.PORT, 10) || 6969;
+const app = next({ dev });
+const handle = app.getRequestHandler();
+const { getShows, getShow, getAllShowSickPicks } = require('./lib/getShows');
 
-// HTTP function
-exports.handler = async function http(req) {
-  console.log(req)
-  return {
-    headers: {
-      'content-type': 'text/html; charset=utf8',
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
-    },
-    body: html
-  }
-}
+app.prepare().then(() => {
+  const server = express();
+
+  // API endpoints
+  server.get('/api/shows', (req, res) => {
+    res.json(getShows());
+  });
+
+  server.get('/api/shows/:number', (req, res) => {
+    const show = getShow(req.params.number);
+    if (show) {
+      res.json(show);
+      return;
+    }
+    res.status(404).json({ message: 'Sorry not found' });
+  });
+
+  server.get('/api/sickpicks', (req, res) => {
+    res.json(getAllShowSickPicks());
+  });
+
+  // Custom Next.js URLs
+  Router.forEachPrettyPattern((page, pattern, defaultParams) => {
+    server.get(pattern, (req, res) => {
+      app.render(
+        req,
+        res,
+        `/${page}`,
+        Object.assign({}, defaultParams, req.query, req.params)
+      );
+    });
+  });
+
+  // everything else
+  server.get('*', (req, res) => handle(req, res));
+  server.listen(port, () => `Listening on ${port}`);
+});
